@@ -28,10 +28,12 @@ router.post('/', async (req, res) => {
     // Make a request to verifyURL and await for response
     const body = await fetch(verifyURL).then(res => res.json());
   
+    console.log(body);
     // if not a success
-    if (body.success !== undefined && !body.success)
-      return res.json({ success: false, msg: 'Failed captcha verification' });
-  
+    if (body.success !== undefined && !body.success) {
+        return res.json({ success: false, msg: 'Failed captcha verification' });
+    }
+    
     // if success
     return res.json({ success: true, msg: 'Captcha passed' });
 });

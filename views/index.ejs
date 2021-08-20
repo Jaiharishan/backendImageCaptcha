@@ -18,10 +18,9 @@
 
         function submitForm(e) {
             e.preventDefault();
-            console.log('abc');
-
-            const name = document.querySelector('#name');
-            const captcha = document.querySelector('#g-recaptcha-response');
+            const name = document.querySelector('#name').value;
+            const captcha = document.querySelector('#g-recaptcha-response').value;
+            console.log(captcha);
 
             fetch('/', {
                 method: 'POST',
@@ -31,7 +30,7 @@
                 },
                 body: JSON.stringify({name: name, captcha: captcha})
             })
-            .then((res) => res.json())
+            .then(res => res.json())
             .then(data => {
                 console.log(data);
             })
