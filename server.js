@@ -1,8 +1,6 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const app = express();
-const request = require('request');
-const fetch = require('node-fetch');
 
 // setting ejs and ejs layouts
 app.use(expressLayouts);

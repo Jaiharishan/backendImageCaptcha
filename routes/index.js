@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const fetch = require('node-fetch');
-const request = require('request');
 const { stringify } = require('querystring');
 
 
@@ -11,24 +10,30 @@ router.get('/', (req, res) => {
 
 
 router.post('/', async (req, res) => {
-    if (!req.body.captcha)
+
+    const imageCaptcha = req.body.captcha;
+    // the form credentials are got here
+    if (!imageCaptcha)
       return res.json({ success: false, msg: 'Please choose the captcha image'});
   
     // Secret key for server side
     const secretKey = '6LfdYxMcAAAAAG6b_FxpyYSlKn3lM2GXToG83phJ';
   
-    // Verify URL Google recaptcha
+    
+    // queries to be sent on the verifyurl gets stringfied by using inbuilt querystring library
     const query = stringify({
       secret: secretKey,
-      response: req.body.captcha,
+      response: imageCaptcha,
       remoteip: req.connection.remoteAddress
     });
+
+    // Verify URL Google recaptcha
     const verifyURL = `https://google.com/recaptcha/api/siteverify?${query}`;
   
-    // Make a request to verifyURL and await for response
+
+    // Make a fetch request to verifyURL(google) and await for response
     const body = await fetch(verifyURL).then(res => res.json());
   
-    console.log(body);
     // if not a success
     if (body.success !== undefined && !body.success) {
         return res.json({ success: false, msg: 'Failed captcha verification' });

@@ -14,14 +14,21 @@
     </form>
 
     <script>
+        // adding submit event listener to the form
         document.getElementById('captchaform').addEventListener('submit', submitForm);
 
+
+        // submit function
         function submitForm(e) {
+            // to prevent the default submit functionality
             e.preventDefault();
+
+            // getting the values from the inputs
             const name = document.querySelector('#name').value;
             const captcha = document.querySelector('#g-recaptcha-response').value;
-            console.log(captcha);
 
+
+            // using fetch to post the form credentials in json format and later retrieve it in server
             fetch('/', {
                 method: 'POST',
                 headers: {
