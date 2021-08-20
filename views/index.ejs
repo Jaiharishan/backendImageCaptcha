@@ -1,0 +1,46 @@
+<section class="p-5 d-flex align-items-center justify-content-center" >
+
+    <form id='captchaform' class="p-3 d-flex flex-column align-items-center" style="min-width: 310px;border: 1px solid rgb(200, 200, 200);border-radius: 1rem;">
+
+        <div class="mb-3 w-100">
+          <label for="name" class="form-label">Your name</label>
+          <input type="name" class="form-control" id="name">
+        </div>
+
+    
+        <div class="g-recaptcha mb-3" data-type="image" data-sitekey="6LfdYxMcAAAAACkH_bmb_YYAYTAPXMylckEPynU3"></div>
+    
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('captchaform').addEventListener('submit', submitForm);
+
+        function submitForm(e) {
+            e.preventDefault();
+            console.log('abc');
+
+            const name = document.querySelector('#name');
+            const captcha = document.querySelector('#g-recaptcha-response');
+
+            fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({name: name, captcha: captcha})
+            })
+            .then((res) => res.json())
+            .then(data => {
+                console.log(data);
+            })
+        }
+    </script>
+</section>
+
+
+
+
+
+
